@@ -192,7 +192,8 @@ int main() {
             fprintf(stderr, "Error on receiving command --> %s", strerror(errno));
             exit(EXIT_FAILURE);
         }
-
+        printf("received from host %s%s",buffer[0],buffer[1]);
+        
         ServerConnection server_conn = servers_connections[chooseServer(servers_connections, buffer[0], buffer[1] - '0')];
         send(server_conn->lb_server_socket, buffer, sizeof(buffer), 0);
         memset(buffer, 0, sizeof(buffer));
