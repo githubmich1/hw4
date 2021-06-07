@@ -244,6 +244,7 @@ int chooseServer(ServerConnection servers_connections[], char request_type, int 
     // }
 
     // servers_connections[server_index]->load += servers_connections[server_index]->delta;
+}
 
 
 
