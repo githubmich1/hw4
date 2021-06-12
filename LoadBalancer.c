@@ -332,21 +332,26 @@ int chooseServer(ServerConnection servers_connections[], char request_type, int 
     int min_load = INT_MAX;
     int min_delta = INT_MAX;
     int i;
+    int load_with_delta[SERVERS_COUNT];
     for (i = 0; i < SERVERS_COUNT; ++i) {
-        servers_connections[i]->new_load = servers_connections[i]->load + servers_connections[i]->delta;
-        if (servers_connections[i]->new_load < min_load) {
-            min_load = servers_connections[i]->new_load;
+        load_with_delta[i] = servers_connections[i]->load;
+    }
+
+    for (i = 0; i < SERVERS_COUNT; ++i) {
+        load_with_delta[i] += servers_connections[i]->delta;
+        if (load_with_delta[i] < min_load) {
+            min_load = load_with_delta[i];
             min_delta = servers_connections[i]->delta;
             server_index = i;
         }
-        else if ((servers_connections[i]->new_load == min_load) && (servers_connections[i]->delta < min_delta)) {
+        else if ((load_with_delta[i] == min_load) && (servers_connections[i]->delta < min_delta)) {
             min_delta = servers_connections[i]->delta;
             server_index = i;
         }
 
     }
 
-    servers_connections[server_index]->load += servers_connections[server_index]->delta;
+    //servers_connections[server_index]->load += servers_connections[server_index]->delta;
     return server_index;
 }
 
