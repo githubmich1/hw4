@@ -174,8 +174,9 @@ int AddCustomerRequest(ServerConnection servers_connections[], CustomerRequest c
     }
     int delta = multiplier * c->request_len;
     pthread_mutex_lock(&(lock23[server_num]));/////
+    printf("Before adding delta , load is %d\n", s->load);
     s->load += delta;
-    printf("AddCustomerRequest parameters: socket- %d, requestType- %c, requestLen- %d, serverNum- %d, multiplier- %d, delta - %d, load - %d", c->client_socket, c->request_type, c->request_len, server_num, 
+    printf("AddCustomerRequest parameters: socket- %d, requestType- %c, requestLen- %d, serverNum- %d, multiplier- %d, delta - %d, load - %d\n", c->client_socket, c->request_type, c->request_len, server_num, 
         multiplier,delta, s->load);
     pthread_mutex_unlock(&(lock23[server_num]));/////
 
