@@ -184,8 +184,7 @@ int AddCustomerRequest(ServerConnection servers_connections[], CustomerRequest c
 }
 
 void printServerConnections(ServerConnection servers_connections[]) {
-    int i;
-    for (i = 0; i < SERVERS_COUNT; i++) {
+    for (int i = 0; i < SERVERS_COUNT; i++) {
         printf("server_name: %s\n", servers_connections[i]->server_name);
         printf("server_address: %s\n", servers_connections[i]->server_address);
         printf("lb_server_socket: %d\n", servers_connections[i]->lb_server_socket);
@@ -205,8 +204,7 @@ CyclicBuffer InitCyclicBuffer() {
 }
 
 int lock23Init() {
-    int i;
-    for ( i = 0; i < SERVERS_COUNT; i++) {
+    for (int i = 0; i < SERVERS_COUNT; i++) {
         if (pthread_mutex_init(&(lock23[i]), NULL) != 0) {
             return -1;
         }
@@ -331,8 +329,7 @@ int chooseServer(ServerConnection servers_connections[], char request_type, int 
     int server_index = 0;
     int min_load = INT_MAX;
     int min_delta = INT_MAX;
-    int i;
-    for (i = 0; i < SERVERS_COUNT; ++i) {
+    for (int i = 0; i < SERVERS_COUNT; ++i) {
         servers_connections[i]->new_load = servers_connections[i]->load + servers_connections[i]->delta;
         if (servers_connections[i]->new_load < min_load) {
             min_load = servers_connections[i]->new_load;
@@ -386,8 +383,7 @@ int createLBServerSocket(char* server_address) {
 }
 
 void initServerConnections(ServerConnection servers_connections[]) {
-    int i;
-    for (i = 0; i < SERVERS_COUNT; i++) {
+    for (int i = 0; i < SERVERS_COUNT; i++) {
         servers_connections[i] = (ServerConnection)malloc(sizeof(struct ServerConnection));
         char servNumber = (char)i + '1';
         char server_name[] = "serv$";
@@ -443,11 +439,11 @@ void* serverToClientThread(void* vargp) {
     sleep(1);
     int server_index = *((int*)vargp);
     while (1) {
-        printf("in serverToClientThread, server_index: %d\n", server_index);
+        //printf("in serverToClientThread, server_index: %d\n", server_index);
         ServerConnection server_conn = servers_connections[server_index];
-        printf("serverToClientThread debug 1");
+        //printf("serverToClientThread debug 1");
         CustomerRequest customer_req = RemoveCustomerRequest(servers_connections, server_index);
-        printf("customer_req in SERVER: %s\n", customer_req == NULL ? "is NULL" : "is not NULL");
+        //printf("customer_req in SERVER: %s\n", customer_req == NULL ? "is NULL" : "is not NULL");
         if (customer_req == NULL) {
             usleep(200000);
             continue;
