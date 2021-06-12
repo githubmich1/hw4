@@ -184,7 +184,8 @@ int AddCustomerRequest(ServerConnection servers_connections[], CustomerRequest c
 }
 
 void printServerConnections(ServerConnection servers_connections[]) {
-    for (int i = 0; i < SERVERS_COUNT; i++) {
+    int i;
+    for (i = 0; i < SERVERS_COUNT; i++) {
         printf("server_name: %s\n", servers_connections[i]->server_name);
         printf("server_address: %s\n", servers_connections[i]->server_address);
         printf("lb_server_socket: %d\n", servers_connections[i]->lb_server_socket);
@@ -329,7 +330,8 @@ int chooseServer(ServerConnection servers_connections[], char request_type, int 
     int server_index = 0;
     int min_load = INT_MAX;
     int min_delta = INT_MAX;
-    for (int i = 0; i < SERVERS_COUNT; ++i) {
+    int i;
+    for (i = 0; i < SERVERS_COUNT; ++i) {
         servers_connections[i]->new_load = servers_connections[i]->load + servers_connections[i]->delta;
         if (servers_connections[i]->new_load < min_load) {
             min_load = servers_connections[i]->new_load;
@@ -383,7 +385,8 @@ int createLBServerSocket(char* server_address) {
 }
 
 void initServerConnections(ServerConnection servers_connections[]) {
-    for (int i = 0; i < SERVERS_COUNT; i++) {
+    int i;
+    for ( i = 0; i < SERVERS_COUNT; i++) {
         servers_connections[i] = (ServerConnection)malloc(sizeof(struct ServerConnection));
         char servNumber = (char)i + '1';
         char server_name[] = "serv$";
