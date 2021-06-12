@@ -205,7 +205,8 @@ CyclicBuffer InitCyclicBuffer() {
 }
 
 int lock23Init() {
-    for (int i = 0; i < SERVERS_COUNT; i++) {
+    int i;
+    for (i = 0; i < SERVERS_COUNT; i++) {
         if (pthread_mutex_init(&(lock23[i]), NULL) != 0) {
             return -1;
         }
